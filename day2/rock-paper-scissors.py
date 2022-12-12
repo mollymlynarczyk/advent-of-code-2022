@@ -16,24 +16,35 @@ opponent_letters = {
     "C": "Scissors"
 }
 
-you_letters = {
-    "X": "Rock",
-    "Y": "Paper",
-    "Z": "Scissors"
+outcome_letters = {
+    "X": "Lose",
+    "Y": "Draw",
+    "Z": "Win"
+}
+
+pick = {
+    "Draw": {
+        "Scissors": "Scissors",
+        "Rock": "Rock",
+        "Paper": "Paper"
+    },
+    "Win" : {
+        "Rock": "Paper",
+        "Scissors": "Rock",
+        "Paper": "Scissors"
+    },
+    "Lose": {
+        "Paper": "Rock",
+        "Rock": "Scissors",
+        "Scissors": "Paper"
+    }
 }
 
 with open("input.txt") as input:
     score = 0
     for line in input.readlines():
         opponent = opponent_letters[line[0]]
-        you = you_letters[line[2]]
-        if opponent == you:
-            # Draw
-            score += item_score[you] + outcome_score["Draw"]
-        elif (opponent == "Rock" and you == "Scissors") or (opponent == "Scissors" and you == "Paper") or (opponent == "Paper" and you == "Rock"):
-            # Lose
-            score += item_score[you] + outcome_score["Lose"]
-        else:
-            # Win
-            score += item_score[you] + outcome_score["Win"]
+        outcome = outcome_letters[line[2]]
+        you = pick[outcome][opponent]
+        score += item_score[you] + outcome_score[outcome]
     print(score)
