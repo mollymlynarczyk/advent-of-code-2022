@@ -25,9 +25,11 @@ with open("input.txt") as input:
             crates = int(directions[1])
             from_stack = int(directions[3]) - 1
             to_stack = int(directions[5]) - 1
-            #crates moved one at a time
+            crates_to_move = []
+            #multiple crates moved at a time
             for i in range(crates):
-                stacks[to_stack].append(stacks[from_stack].pop())
+                crates_to_move.insert(0, stacks[from_stack].pop())
+            stacks[to_stack] = stacks[to_stack] + crates_to_move
     result = ""
     for i in range(num_stacks):
         result = result + stacks[i].pop()
